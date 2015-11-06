@@ -4,12 +4,17 @@ import (
 	"io"
 	"fmt"
 	"strings"
-	"terminal"
+
+	"github.com/carmark/pseudo-terminal-go/terminal"
 )
 
 func main() {
-	term, _ := terminal.NewWithStdInOut()
+	term, err := terminal.NewWithStdInOut()
+	if err != nil {
+		panic(err)
+	}
 	defer term.ReleaseFromStdInOut() // defer this  
+	fmt.Println("Ctrl-D to break")
 	term.SetPrompt("root@hello: # ")
 	line, err:= term.ReadLine()
 	for {
